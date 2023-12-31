@@ -1,0 +1,54 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:2.0.18-openssl
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+    volumes:
+      - $PWD/mosquitto/config:/mosquitto/config
+      - mqtt_data:/mosquitto/data
+
+  grafana:
+    image: grafana/grafana-oss:10.2.3
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+    #  - GF_INSTALL_PLUGINS=grafana-mqtt-datasource
+      - TZ=Asia/Tokyo
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASS}
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+  node-red:
+    image: nodered/node-red:3.1.3
+    container_name: node-red
+    ports:
+      - "1880:1880"
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - node_red_data:/data
+  
+  influxdb:
+    image: influxdb:1.8.10
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=${INFLUXDB_DATABASE}
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USER}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASS}
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+
+volumes:
+  mqtt_data:
+  grafana_data:
+  node_red_data:
+  influxdb_data:
