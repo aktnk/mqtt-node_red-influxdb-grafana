@@ -33,22 +33,26 @@ services:
       - TZ=Asia/Tokyo
     volumes:
       - node_red_data:/data
-  
-  influxdb:
-    image: influxdb:1.8.10
-    container_name: influxdb
+
+  influxdb2:
+    image: influxdb:2.7.4
+    container_name: influxdb2
     restart: unless-stopped
     ports:
       - "8086:8086"
     environment:
-      - INFLUXDB_DB=${INFLUXDB_DATABASE}
-      - INFLUXDB_ADMIN_USER=${INFLUXDB_USER}
-      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASS}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USER}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASS}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
     volumes:
-      - influxdb_data:/var/lib/influxdb
+      - influxdb2_data:/var/lib/influxdb2
+      - $PWD/influxdb2/config:/etc/influxdb2
 
 volumes:
   mqtt_data:
   grafana_data:
   node_red_data:
-  influxdb_data:
+  influxdb2_data:
