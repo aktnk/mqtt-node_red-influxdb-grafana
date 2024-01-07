@@ -55,6 +55,29 @@ This system has been tested in the following environments.
     ✔ Container grafana   Started                                                                                0.5s
     $
     ```
+1. Create a password file on mqtt container
+
+    Use the mosquitto_passwd command in the mqtt container to register a username and password that allows access to the MQTT server.
+    
+    ```
+    $ docker exec -it mqtt /bin/sh
+    / # cd mosquitto/config/
+    /mosquitto/config # ls -la
+    total 12
+    drwxr-xr-x    2 mosquitt mosquitt      4096 Jan  7 08:32 .
+    drwxr-xr-x    1 mosquitt mosquitt      4096 Dec  1 07:00 ..
+    -rw-r--r--    1 mosquitt mosquitt       150 Jan  7 07:19 mosquitto.conf
+    /mosquitto/config # mosquitto_passwd -c passwd mqtt_user
+    Password:
+    Reenter password:
+    /mosquitto/config # ls -la
+    total 16
+    drwxr-xr-x    2 mosquitt mosquitt      4096 Jan  7 08:32 .
+    drwxr-xr-x    1 mosquitt mosquitt      4096 Dec  1 07:00 ..
+    -rw-r--r--    1 mosquitt mosquitt       150 Jan  7 07:19 mosquitto.conf
+    -rw-------    1 root     root           123 Jan  7 08:32 passwd
+    /mosquitto/config # exit
+    ```
 
 1. Create a database on InfluxDB
 
