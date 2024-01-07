@@ -58,7 +58,7 @@ This system has been tested in the following environments.
 1. Create a password file on mqtt container
 
     Use the mosquitto_passwd command in the mqtt container to register a username and password that allows access to the MQTT server.
-    
+
     ```
     $ docker exec -it mqtt /bin/sh
     / # cd mosquitto/config/
@@ -122,7 +122,9 @@ This system has been tested in the following environments.
 In constructing this environment, I referred to the following articles.
 
 * [dockerhub - elipse-mosquitto](https://hub.docker.com/_/eclipse-mosquitto)
+* [mosquitto documents](https://mosquitto.org/documentation/)
 * [dockerhub - nodered/node-red](https://hub.docker.com/r/nodered/node-red)
+* [Node-RED - documentation](https://nodered.org/docs/)
 * [node-red-contrib-inflxdb](https://flows.nodered.org/node/node-red-contrib-influxdb)
 * [Get started with InfluxDB OSS](https://docs.influxdata.com/influxdb/v1/introduction/get-started/)
 * [Get started with Grafana and InfluxDB](https://grafana.com/docs/grafana/latest/getting-started/get-started-grafana-influxdb/#get-started-with-grafana-and-influxdb)
